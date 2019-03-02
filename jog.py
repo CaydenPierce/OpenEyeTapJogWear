@@ -39,7 +39,7 @@ def createLog(name): #adds log of seeing person. Contains context such as who, w
 
             wr = csv.writer(log_csv, delimiter = ',')
             wr.writerow(memory)
-
+'''
 def distanceTwoPoints(point1, point2): #returns distance between two points, in meters
 	# approximate radius of earth in km
 	R = 6373.0
@@ -64,7 +64,7 @@ def totalDistance(name):
 	for row in reader[0:]:
 		print(row)
 
-
+'''
 
 #start the bluetooth server for GPS
 sock = GPSbluetooth.startBluetoothServer()
@@ -73,14 +73,14 @@ sock = GPSbluetooth.startBluetoothServer()
 name = sys.argv[1]
 
 #create file to save coordinates
-createJogFile(name)
+#createJogFile(name)
 
 while True: #main 
 	createLog(name) #create a new log with time, speed, and location data
 	sleep(1)
 
 #find total distance of jog, append it to end of log
-distance = jogReader(name)
+#distance = jogReader(name)
 
 #clean up when complete
 sock.close()      
