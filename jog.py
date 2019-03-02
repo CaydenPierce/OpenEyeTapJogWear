@@ -1,7 +1,6 @@
 '''
-Speedometer for the OpenEyeTap
+JogWear for the OpenEyeTap
 Created by Cayden Pierce, Feb. 2018.
-Humanistic Intelligence is the future we are all creating together.
 '''
 
 
@@ -12,15 +11,18 @@ from blue import GPSbluetooth #my Bluetooth GPS NMEA client, RFCOMM
 def CurrentTime():
     return('%s')%(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
-def createLog(speed): #adds log of seeing person. Contains context such as who, what, where, when
+def createLog(): #adds log of seeing person. Contains context such as who, what, where, when
         with open(os.path.join(os.path.dirname(__file__), "memory/joglog.csv"), "a", newline="") as log_csv: #open in append and read mode
             time = CurrentTime()
             coordinates = GPSbluetooth.getLocation(sock)
             if coordinates:
             	lat, long = coordinates
-            	location = getAddress(lat, long)
             else:
-            	location = ("{}, {}".format(lat, long))
+            	location = ("{}, {}".format(lat, long)
+            
+            speed = GPSbluetooth.getSpeed(sock)
+            if !sock:
+                speed = "NA"
             memory = [time, speed, location]
 
             wr = csv.writer(log_csv, delimiter = ',')
@@ -30,11 +32,10 @@ def createLog(speed): #adds log of seeing person. Contains context such as who, 
 sock = GPSbluetooth.startBluetoothServer()
  
 while True: #main 
-	#get current speed
-	location = GPSbluetooth.getLocation(sock)
-	speed = GPSbluetooth.getSpeed(sock)
-	createLog(location, speed)
-        
+	createLog() #create a new log with time, speed, and location data
+	sleep(1)
+
+#clean up when complete
 sock.close()      
-camera.stop_preview()
+
 
