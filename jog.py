@@ -3,13 +3,14 @@ JogWear for the OpenEyeTap
 Created by Cayden Pierce, Feb. 2018.
 '''
 
-
+import os
+import csv
 from time import sleep
 import datetime as dt
 from blue import GPSbluetooth #my Bluetooth GPS NMEA client, RFCOMM
 
 def CurrentTime():
-    return('%s')%(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    return('%s')%(dt.datetime.now().strftime('%m/%d/%Y_%H:%M:%S'))
 
 def createLog(): #adds log of seeing person. Contains context such as who, what, where, when
         with open(os.path.join(os.path.dirname(__file__), "memory/joglog.csv"), "a", newline="") as log_csv: #open in append and read mode
@@ -18,10 +19,13 @@ def createLog(): #adds log of seeing person. Contains context such as who, what,
             if coordinates:
             	lat, long = coordinates
             else:
-            	location = ("{}, {}".format(lat, long)
-            
+                lat = "NA"
+                long = "NA"
+
+            location = ("{}, {}".format(lat, long))
+
             speed = GPSbluetooth.getSpeed(sock)
-            if !sock:
+            if speed is None:
                 speed = "NA"
             memory = [time, speed, location]
 
