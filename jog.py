@@ -12,7 +12,7 @@ from blue import GPSbluetooth #my Bluetooth GPS NMEA client, RFCOMM
 def CurrentTime():
     return('%s')%(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
-def createLog(): #adds log of seeing person. Contains context such as who, what, where, when
+def createLog(speed): #adds log of seeing person. Contains context such as who, what, where, when
         with open(os.path.join(os.path.dirname(__file__), "memory/joglog.csv"), "a", newline="") as log_csv: #open in append and read mode
             time = CurrentTime()
             coordinates = GPSbluetooth.getLocation(sock)
@@ -25,12 +25,16 @@ def createLog(): #adds log of seeing person. Contains context such as who, what,
 
             wr = csv.writer(log_csv, delimiter = ',')
             wr.writerow(memory)
-            
+
+#start the bluetooth server for GPS
+sock = GPSbluetooth.startBluetoothServer()
+ 
 while True: #main 
 	#get current speed
 	location = GPSbluetooth.getLocation(sock)
 	speed = GPSbluetooth.getSpeed(sock)
-	createLog(location)
+	createLog(location, speed)
         
 sock.close()      
 camera.stop_preview()
+
