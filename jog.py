@@ -13,15 +13,15 @@ def CurrentTime():
     return('%s')%(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
 def createLog(): #adds log of seeing person. Contains context such as who, what, where, when
-        with open(os.path.join(os.path.dirname(__file__), "memory/locationlog.csv"), "a", newline="") as log_csv: #open in append and read mode
+        with open(os.path.join(os.path.dirname(__file__), "memory/joglog.csv"), "a", newline="") as log_csv: #open in append and read mode
             time = CurrentTime()
             coordinates = GPSbluetooth.getLocation(sock)
             if coordinates:
             	lat, long = coordinates
             	location = getAddress(lat, long)
             else:
-            	location = ("Latitude: {}, Longitude: {}".format(lat, long))
-            memory = [time, location, "Null"]
+            	location = ("{}, {}".format(lat, long))
+            memory = [time, speed, location]
 
             wr = csv.writer(log_csv, delimiter = ',')
             wr.writerow(memory)
@@ -29,6 +29,7 @@ def createLog(): #adds log of seeing person. Contains context such as who, what,
 while True: #main 
 	#get current speed
 	location = GPSbluetooth.getLocation(sock)
+	speed = GPSbluetooth.getSpeed(sock)
 	createLog(location)
         
 sock.close()      
