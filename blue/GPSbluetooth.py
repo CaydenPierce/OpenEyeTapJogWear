@@ -13,7 +13,7 @@ from time import sleep
 import random
 
 def startBluetoothServer(): #main
-    target = "34:14:5F:D3:C8:F4"
+    target = None
     #check for visible devices (do-while loop)
     while True:
          services = bluetooth.find_service(address=target)

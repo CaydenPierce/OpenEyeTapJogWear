@@ -33,7 +33,7 @@ while True:
 	speed = GPSbluetooth.getSpeed(sock)
 
 	#update camera text
-	camera.annotate_text = str(speed)
+	camera.annotate_text = str(speed) + "kph"
 
 sock.close()
 camera.stop_preview()
