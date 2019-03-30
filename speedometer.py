@@ -16,6 +16,7 @@ sock = GPSbluetooth.startBluetoothServer()
 #create the camera, set to low resolution for faster processing
 camera = picamera.PiCamera()
 camera.resolution = (320, 240)
+camera.rotation = 90
 
 #start camera view
 camera.start_preview()
@@ -23,14 +24,16 @@ camera.start_preview()
 #counter for testing
 counter = 0
 
-while counter < 15:
+while True:
 #main program loop
-	counter += 1
-	print("loop {}".format(counter))
- 
+	#counter += 1
+	#print("loop {}".format(counter))
+
 	#get current speed
 	speed = GPSbluetooth.getSpeed(sock)
-	camera.annotate_text = speed
-        
-sock.close()      
+
+	#update camera text
+	camera.annotate_text = str(speed)
+
+sock.close()
 camera.stop_preview()

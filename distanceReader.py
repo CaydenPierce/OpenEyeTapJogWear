@@ -29,7 +29,8 @@ def totalDistance(name):
 		reader = csv.reader(joglog, delimiter = ',')
 		for i, row in enumerate(reader):
 			if ((i % 30) - 1 == 0): #only check every thirty coordinates
-				points.append([float(row[2]), float(row[3])]) #append coordinate point to points list
+				if (row[2] != "NA"):
+					points.append([float(row[2]), float(row[3])]) #append coordinate point to points list
 	for i, point in enumerate(points[:-1]):
 		totalDistance += distanceTwoPoints(points[i], points[i+1])
 	return totalDistance
